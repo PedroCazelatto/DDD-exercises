@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest run --watch"
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "",
