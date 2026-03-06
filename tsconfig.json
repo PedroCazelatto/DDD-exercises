@@ -10,8 +10,15 @@
     "moduleResolution": "bundler",
     "target": "esnext",
     "lib": ["esnext"],
-    "types": ["node"],
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
     "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
     // Other Outputs
     "sourceMap": true,

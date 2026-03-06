@@ -1,7 +1,7 @@
 import { differenceInDays } from "date-fns"
-import { Entity } from "../../core/entities/entity"
-import type { UniqueEntityId } from "../../core/entities/unique-entity-id.value-object"
-import type { Optional } from "../../core/types/optional.type"
+import { Entity } from "@/core/entities/entity"
+import type { UniqueEntityId } from "@/core/entities/unique-entity-id.value-object"
+import type { Optional } from "@/core/types/optional.type"
 import { Slug } from "./value-objects/slug.value-object"
 
 interface QuestionProps {
