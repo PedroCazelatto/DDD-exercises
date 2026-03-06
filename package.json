@@ -15,5 +15,8 @@
     "@types/node": "^25.0.10",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0"
   }
 }

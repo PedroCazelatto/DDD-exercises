@@ -1,7 +1,8 @@
+import { differenceInDays } from "date-fns"
 import { Entity } from "../../core/entities/entity"
 import type { UniqueEntityId } from "../../core/entities/unique-entity-id.value-object"
 import type { Optional } from "../../core/types/optional.type"
-import type { Slug } from "./value-objects/slug.value-object"
+import { Slug } from "./value-objects/slug.value-object"
 
 interface QuestionProps {
   authorId: UniqueEntityId
@@ -14,12 +15,75 @@ interface QuestionProps {
 }
 
 export class Question extends Entity<QuestionProps> {
+  get authorId() {
+    return this.props.authorId
+  }
+
+  get bestAnswerId() {
+    return this.props.bestAnswerId
+  }
+
+  get title() {
+    return this.props.title
+  }
+
+  get content() {
+    return this.props.content
+  }
+
+  get slug() {
+    return this.props.slug
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  get isNew(): boolean {
+    return differenceInDays(new Date(), this.createdAt) <= 3
+  }
+
+  get excerpt(): string {
+    return this.content
+      .slice(0, 120)
+      .trimEnd()
+      .concat("...")
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
+
+  set title(title: string) {
+    this.props.title = title
+    this.props.slug = Slug.createFromText(title)
+
+    this.touch()
+  }
+
+  set content(content: string) {
+    this.props.content = content
+
+    this.touch()
+  }
+
+  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
+    this.props.bestAnswerId = bestAnswerId
+
+    this.touch()
+  }
+
   static create(
-    props: Optional<QuestionProps, "createdAt">,
+    props: Optional<QuestionProps, "createdAt" | "slug">,
     id?: UniqueEntityId
   ) {
     const question = new Question({
       ...props,
+      slug: props.slug ?? Slug.createFromText(props.title),
       createdAt: new Date()
     }, id)
 
