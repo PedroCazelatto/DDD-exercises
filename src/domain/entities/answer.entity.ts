@@ -32,10 +32,7 @@ export class Answer extends Entity<AnswerProps> {
   }
 
   get excerpt(): string {
-    return this.content
-      .slice(0, 120)
-      .trimEnd()
-      .concat("...")
+    return this.content.slice(0, 120).trimEnd().concat("...")
   }
 
   private touch() {
@@ -52,10 +49,13 @@ export class Answer extends Entity<AnswerProps> {
     props: Optional<AnswerProps, "createdAt">,
     id?: UniqueEntityId
   ) {
-    const answer = new Answer({
-      ...props,
-      createdAt: new Date()
-    }, id)
+    const answer = new Answer(
+      {
+        ...props,
+        createdAt: new Date()
+      },
+      id
+    )
 
     return answer
   }

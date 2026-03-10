@@ -48,10 +48,7 @@ export class Question extends Entity<QuestionProps> {
   }
 
   get excerpt(): string {
-    return this.content
-      .slice(0, 120)
-      .trimEnd()
-      .concat("...")
+    return this.content.slice(0, 120).trimEnd().concat("...")
   }
 
   private touch() {
@@ -81,11 +78,14 @@ export class Question extends Entity<QuestionProps> {
     props: Optional<QuestionProps, "createdAt" | "slug">,
     id?: UniqueEntityId
   ) {
-    const question = new Question({
-      ...props,
-      slug: props.slug ?? Slug.createFromText(props.title),
-      createdAt: new Date()
-    }, id)
+    const question = new Question(
+      {
+        ...props,
+        slug: props.slug ?? Slug.createFromText(props.title),
+        createdAt: new Date()
+      },
+      id
+    )
 
     return question
   }
