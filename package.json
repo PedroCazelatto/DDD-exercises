@@ -10,10 +10,11 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix"
   },
-  "keywords": [ ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
     "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^25.0.10",
     "eslint": "^8.57.1",
