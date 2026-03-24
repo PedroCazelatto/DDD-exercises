@@ -1,0 +1,5 @@
+import type { Question } from "@/domain/forum/enterprise/entities/question.entity"
+
+export interface QuestionsRepository {
+  create(question: Question): Promise<void>
+}
