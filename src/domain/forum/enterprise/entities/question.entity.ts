@@ -1,7 +1,7 @@
 import { AggregateRoot } from "@/core/entities/aggregate-root"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.value-object"
 import type { Optional } from "@/core/types/optional.type"
-import type { QuestionAttachment } from "@/domain/forum/enterprise/entities/question-attachment.entity"
+import { QuestionAttachmentList } from "@/domain/forum/enterprise/entities/question-attachment-list.entity"
 import { differenceInDays } from "date-fns"
 import { Slug } from "./value-objects/slug.value-object"
 
@@ -11,7 +11,7 @@ export interface QuestionProps {
   title: string
   content: string
   slug: Slug
-  attachments: QuestionAttachment[]
+  attachments: QuestionAttachmentList
   createdAt: Date
   updatedAt?: Date
 }
@@ -74,7 +74,7 @@ export class Question extends AggregateRoot<QuestionProps> {
     this.touch()
   }
 
-  set attachments(attachments: QuestionAttachment[]) {
+  set attachments(attachments: QuestionAttachmentList) {
     this.props.attachments = attachments
   }
 
@@ -92,7 +92,7 @@ export class Question extends AggregateRoot<QuestionProps> {
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.title),
-        attachments: props.attachments || [],
+        attachments: props.attachments ?? new QuestionAttachmentList(),
         createdAt: new Date()
       },
       id

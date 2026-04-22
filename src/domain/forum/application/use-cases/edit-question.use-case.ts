@@ -1,0 +1,63 @@
+import { UniqueEntityId } from "@/core/entities/unique-entity-id.value-object"
+import type { QuestionAttachmentsRepository } from "@/domain/forum/application/repositories/question-attachments.repository"
+import type { QuestionsRepository } from "@/domain/forum/application/repositories/questions.repository"
+import { QuestionAttachmentList } from "@/domain/forum/enterprise/entities/question-attachment-list.entity"
+import { QuestionAttachment } from "@/domain/forum/enterprise/entities/question-attachment.entity"
+
+interface EditQuestionUseCaseRequest {
+  authorId: string
+  questionId: string
+  title: string
+  content: string
+  attachmentsIds: string[]
+}
+
+export class EditQuestionUseCase {
+  constructor(
+    private questionsRepository: QuestionsRepository,
+    private questionAttachmentsRepository: QuestionAttachmentsRepository
+  ) {}
+
+  async execute({
+    authorId,
+    questionId,
+    title,
+    content,
+    attachmentsIds
+  }: EditQuestionUseCaseRequest) {
+    const question = await this.questionsRepository.findById(questionId)
+
+    if (!question) {
+      return left(new ResourceNotFoundError())
+    }
+
+    if (authorId !== question.authorId.toString()) {
+      return left(NotAllowedError())
+    }
+
+    const currentQuestionAttachments =
+      await this.questionAttachmentsRepository.findManyByQuestionId(questionId)
+
+    const questionAttachmentList = new QuestionAttachmentList(
+      currentQuestionAttachments
+    )
+
+    const questionAttachments = attachmentsIds.map(attachmentId => {
+      return QuestionAttachment.create({
+        attachmentId: new UniqueEntityId(attachmentId),
+        questionId: question.id
+      })
+    })
+
+    questionAttachmentList.update(questionAttachments)
+
+    question.title = title
+    question.content = content
+
+    await this.questionsRepository.save(question)
+
+    return right({
+      question
+    })
+  }
+}
