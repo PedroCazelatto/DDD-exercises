@@ -1,4 +1,4 @@
-import { Entity } from "@/core/entities/entity"
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.value-object"
 import type { Optional } from "@/core/types/optional.type"
 import { differenceInDays } from "date-fns"
@@ -14,7 +14,7 @@ export interface QuestionProps {
   updatedAt?: Date
 }
 
-export class Question extends Entity<QuestionProps> {
+export class Question extends AggregateRoot<QuestionProps> {
   get authorId() {
     return this.props.authorId
   }
