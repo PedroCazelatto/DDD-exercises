@@ -1,14 +1,22 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id.value-object"
 import { DeleteQuestionUseCase } from "@/domain/forum/application/use-cases/delete-question.use-case"
 import { makeQuestion } from "test/factories/make-question.factory"
+import { InMemoryQuestionAttachmentsRepository } from "test/repositories/in-memory-question-attachments.repository"
 import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questions-repository"
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let sut: DeleteQuestionUseCase
 
 describe("Delete question", () => {
   beforeEach(() => {
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository
+    )
+
     sut = new DeleteQuestionUseCase(inMemoryQuestionsRepository)
   })
 

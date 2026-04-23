@@ -40,7 +40,6 @@ describe("Read notifications", () => {
       recipientId: "recipient-2"
     })
 
-    expect(result.notification.id).toBeTruthy()
-    expect(result.notification).toBeInstanceOf(Error)
+    expect(result).toBeInstanceOf(Error)
   })
 })

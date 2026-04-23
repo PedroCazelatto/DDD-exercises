@@ -16,12 +16,14 @@ export class ReadNotificationUseCase {
   async execute({
     recipientId,
     notificationId
-  }: ReadNotificationUseCaseRequest): Promise<ReadNotificationUseCaseResponse> {
+  }: ReadNotificationUseCaseRequest): Promise<
+    ReadNotificationUseCaseResponse | Error
+  > {
     const notification =
       await this.notificationsRepository.findById(notificationId)
 
     if (notification?.recipientId.toString() !== recipientId) {
-      throw new Error("Not Authorized")
+      return new Error("Not Authorized")
     }
 
     notification.read()
