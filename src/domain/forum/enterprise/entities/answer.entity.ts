@@ -4,7 +4,7 @@ import type { Optional } from "@/core/types/optional.type"
 import { AnswerAttachmentList } from "@/domain/forum/enterprise/entities/answer-attachment-list.entity"
 import { AnswerCreatedEvent } from "@/domain/forum/enterprise/events/answer-created-event"
 
-interface AnswerProps {
+export interface AnswerProps {
   authorId: UniqueEntityId
   questionId: UniqueEntityId
   content: string
