@@ -1,16 +1,19 @@
-import { Entity } from "@/core/entities/entity"
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id.value-object"
 import type { Optional } from "@/core/types/optional.type"
+import { AnswerAttachmentList } from "@/domain/forum/enterprise/entities/answer-attachment-list.entity"
+import { AnswerCreatedEvent } from "@/domain/forum/enterprise/events/answer-created-event"
 
 interface AnswerProps {
   authorId: UniqueEntityId
   questionId: UniqueEntityId
   content: string
+  attachments: AnswerAttachmentList
   createdAt: Date
   updatedAt?: Date
 }
 
-export class Answer extends Entity<AnswerProps> {
+export class Answer extends AggregateRoot<AnswerProps> {
   get authorId() {
     return this.props.authorId
   }
@@ -23,6 +26,10 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.content
   }
 
+  get attachments() {
+    return this.props.attachments
+  }
+
   get createdAt() {
     return this.props.createdAt
   }
@@ -32,7 +39,7 @@ export class Answer extends Entity<AnswerProps> {
   }
 
   get excerpt(): string {
-    return this.content.slice(0, 120).trimEnd().concat("...")
+    return this.content.substring(0, 120).trimEnd().concat("...")
   }
 
   private touch() {
@@ -41,21 +48,32 @@ export class Answer extends Entity<AnswerProps> {
 
   set content(content: string) {
     this.props.content = content
+    this.touch()
+  }
 
+  set attachments(attachments: AnswerAttachmentList) {
+    this.props.attachments = attachments
     this.touch()
   }
 
   static create(
-    props: Optional<AnswerProps, "createdAt">,
+    props: Optional<AnswerProps, "createdAt" | "attachments">,
     id?: UniqueEntityId
   ) {
     const answer = new Answer(
       {
         ...props,
+        attachments: props.attachments ?? new AnswerAttachmentList(),
         createdAt: new Date()
       },
       id
     )
+
+    const isNewAnswer = !id
+
+    if (isNewAnswer) {
+      answer.addDomainEvent(new AnswerCreatedEvent(answer))
+    }
 
     return answer
   }
