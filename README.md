@@ -1,52 +1,52 @@
 # DDD-exercises
 
-Exercícios sobre Domain-Driven Design
+Exercises on Domain-Driven Design
 
-## Curso da RocketSeat: DDD no Node.js
+## RocketSeat course: DDD in Node.js
 
-Desenvolver um sistema de fórum de dúvidas
+Build a Q&A forum system
 
 ### Value Objects
 
-Propriedades das entidade que possuem uma regra de negócio associada
+Properties of an entity that have a business rule attached to them
 
-## Conceitos
+## Concepts
 
 ### Aggregate
 
-Conjunto de entidades que são manipuladas ao mesmo tempo, quando uma não faz sentido existir sem a outra
+A set of entities that are handled together, when one makes no sense without the other
 
 - Order -> OrderItem[]
 - Order -> Shipping
 
 ### WatchedList
 
-Classe que permite termos mais informações sobre itens de uma lista, para que seja possível adicionar (create), apagar (delete) ou atualizar (update) de itens existentes em uma lista
+A class that gives us more information about the items of a list, so that we can add (create), remove (delete) or update existing items in a list
 
-# Subdomínios
+# Subdomains
 
-- Core: O que dá dinheiro
-- Supporting: Dá suporte para o core funcionar
-- Generic: Você precisa deles mas não são tão importantes
+- Core: what makes money
+- Supporting: supports the core so it can work
+- Generic: you need them, but they are not as important
 
-## Exemplos
+## Examples
 
-Para um e-commerce:
+For an e-commerce:
 
 ### Core:
 
-- Compra
-- Catálogo
-- Pagamento
-- Entrega
-- Faturamento
+- Purchase
+- Catalogue
+- Payment
+- Delivery
+- Billing
 
 ### Supporting:
 
-- Estoque
+- Stock
 
 ### Generics
 
-- Notificação ao cliente
-- Promoções
+- Customer notifications
+- Promotions
 - Chat
